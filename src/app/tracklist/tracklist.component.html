@@ -1,0 +1,13 @@
+<p>
+  tracklist:
+</p>
+<ul>
+  <li *ngFor="let track of trackList">
+      {{track.YOUTUBEID}}
+  </li>
+</ul>
+
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <input type="text" name="id" ngModel>
+  <button type="submit">Add track</button>
+</form>
