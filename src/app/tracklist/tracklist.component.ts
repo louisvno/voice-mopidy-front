@@ -1,6 +1,6 @@
 import { TracklistService } from './../tracklist.service';
 import { Component, OnInit } from '@angular/core';
-import { Track } from '../model/track.model';
+import {  Media } from '../model/media.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class TracklistComponent implements OnInit {
 
-  trackList: Track[];
+  trackList: Media[];
   trackListSub : Subscription;
 
   constructor(private trackListService:TracklistService) { }
@@ -18,11 +18,11 @@ export class TracklistComponent implements OnInit {
   ngOnInit() {
     this.trackListSub =this.trackListService.tracklistChanged.subscribe(res => this.trackList =res);
 
-    this.trackListService.getYoutubeTracks();
+    this.trackListService.getMediaList();
   }
 
   onSubmit(f){
-    this.trackListService.addYoutubeTrack(f.value.id);
+    this.trackListService.addMedia(f.value.id);
  }
 
  ngOnDestroy(){

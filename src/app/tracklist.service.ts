@@ -2,7 +2,7 @@ import { environment } from './../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject} from 'rxjs';
-import { Track } from './model/track.model';
+import { Media } from './model/media.model';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 export class TracklistService {
   apiUrl = environment.apiUrl;
 
-  public tracklistChanged = new Subject<Track[]>();
+  public tracklistChanged = new Subject<Media[]>();
 
   constructor(private http: HttpClient) { }
 
@@ -22,16 +22,15 @@ export class TracklistService {
     })
   };
 
-  addYoutubeTrack(youtubeId:string){
-    this.http.post<Track[]>(`${this.apiUrl}/add-track`,{ youtubeId:youtubeId}).pipe(
+  addMedia(resourceId:string){
+    this.http.post<Media[]>(`${this.apiUrl}/media-add`,{ resourceId:resourceId}).pipe(
       tap(res => this.tracklistChanged.next(res))
     ).subscribe();
   }
 
-  getYoutubeTracks(){
-    this.http.get(`${this.apiUrl}/track-list`,this.httpOptions).pipe(
-      tap((res: Track[]) => {
-        console.log(res);
+  getMediaList(){
+    this.http.get(`${this.apiUrl}/media-list`,this.httpOptions).pipe(
+      tap((res: Media[]) => {
         this.tracklistChanged.next(res)})
     ).subscribe();
   }
